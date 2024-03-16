@@ -21,9 +21,17 @@ app.use(flush());
 const gen=require("./random")
 mongoose.connect("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
 const loginStudSchema=new mongoose.Schema({
-    ID:String,
+    ID_stud:String,
     Name:String,
-    Password:String
+    Password:String,
+    classes:[
+        {
+            class_id:String,
+            Attper:String,
+            Noclass:String,
+            Registry:String
+        }
+    ]
 },
 {collection:"student_users"});
 const LogStud=mongoose.model("student_users", loginStudSchema);
@@ -43,7 +51,7 @@ var modelclass={
     Students:String,  
     NS:String
 };
-const nclass=mongoose.model("class_data", modelclass);
+const nclass=mongoose.model("class_datas", modelclass);
 app.get("/", (req,res)=>{
     res.render("login");
 });
@@ -64,22 +72,32 @@ app.post("/login", async(req,res)=>{
                 name:User_Check.Name
                 
             }
-            res.render("home_teacher", {data:data});
+            console.log(User_Check.Name);
+            var TeachClass=await nclass.find({Teacher:User_Check.Name}).then(docs=>{
+            res.render("home_teacher", {data,docs});
+            });
         }
         else{
             
         }}
-        else
+        else 
         { //
-        var User_Check=await LogStud.findOne({ID:req.body.username});
+        var User_Check=await LogStud.findOne({ID_stud:req.body.username});
         
         if(User_Check.Password === req.body.password)
         {    
             var data={
+                ID:User_Check.ID_stud,
                 name:User_Check.Name
                 
-            }
+            } 
+
+           
+            
+            
             res.render("home_student", {data:data});
+
+        
         }
         else{
             
@@ -87,7 +105,7 @@ app.post("/login", async(req,res)=>{
 
         }
     } catch (error) {
-        
+        console.log(error);
     }
 });
 app.post("/home_teacher", function(req,res){
@@ -114,6 +132,24 @@ app.post("/home_teacher", function(req,res){
     } catch (error) {
         console.log(error);
     }
+});
+app.post("/home_student/:student", async(req,res)=>{
+    try {const join_id=req.body.joinCode;
+        const st_id=req.params.student;
+        //console.log(req.params.student);
+        const stu=await LogStud.findOne({ID_stud:st_id});
+        console.log(stu.ID_stud);
+        loginStudSchema.pre("save",async function(next){
+            const ObjectID=mongoose.Types.ObjectId;
+            const classes=this.classes.map(id=>(typeof id==="string")? new ObjectID(id):id);
+            this.classes=classes;
+            next();
+        })
+        stu.classes.push(join_id); 
+        await stu.save();
+    } catch (error) { 
+        console.log(error);
+    } 
 });
 /*const otp=mongoose.createConnection("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
 const notesSchema=new mongoose.Schema({

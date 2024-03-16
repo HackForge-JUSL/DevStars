@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -81,7 +81,8 @@
       <div class="student-name">{{data.name}}</div>
     </div>
 
-    <div class="class-cards">
+    <!--<div class="class-cards">
+
       <div class="class-card class1">
         <h2>Mathematics</h2>
         <p>Join Mr. Smith's Math Class</p>
@@ -97,8 +98,63 @@
         <p>Journey Through the Past with Dr. Brown</p>
       </div>
 
-      <!-- Add more class cards as needed -->
+     
+    </div>
+     
+  </div>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Homepage</title>
+  <link rel="stylesheet" href="stud_home.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Welcome, <span id="studentName">{{data.name}}</span>!</h1>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div class="class-box">
+      <h2>Mathematics</h2>
+      <p>Teacher: Ms. Smith</p>
+    </div>
+
+    <div class="class-box">
+      <h2>Science</h2>
+      <p>Teacher: Mr. Johnson</p>
+    </div>
+
+    <div class="class-box">
+      <h2>History</h2>
+      <p>Teacher: Mrs. Davis</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <button id="joinClassBtn">Join a New Class</button>
+    </div>
+  </footer>
+
+  <!-- Popup Form for Joining a New Class -->
+  <div class="overlay" id="popupOverlay">
+    <div class="popup">
+      <h2>Join a New Class</h2>
+      <form id="joinClassForm" action="/home_student/{{data.ID}}" method="post">
+        <label for="joinCode">Enter Class Code:</label>
+        <input type="text" id="joinCode" name="joinCode" required>
+        <button type="submit">Join</button>
+      </form>
+      <button class="close" id="closePopup">Close</button>
     </div>
   </div>
+
+  <script src="popup_script.js"></script>
 </body>
 </html>

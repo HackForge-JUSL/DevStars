@@ -138,12 +138,13 @@
     </div>
 
     <div class="class-cards">
+      {{#each docs}}
       <div class="class-card">
-        <h2>Mathematics</h2>
-        <p>Teach Geometry and Algebra</p>
+        <h2>{{this.Subject}}</h2>
+        <p>{{this.Name}}</p>
       </div>
-
-      <div class="class-card">
+      {{/each}}
+     <!-- <div class="class-card">
         <h2>Science</h2>
         <p>Explore Biology and Chemistry</p>
       </div>
@@ -151,7 +152,7 @@
       <div class="class-card">
         <h2>History</h2>
         <p>Journey Through Ancient Civilizations</p>
-      </div>
+      </div>-->
      
       <!-- Add more class cards as needed -->
     </div>

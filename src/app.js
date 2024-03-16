@@ -18,28 +18,41 @@ app.use(express.static("public"));
 app.set("view engine", "hbs"); 
 
 app.use(flush());
-
-const login=mongoose.createConnection("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
+const gen=require("./random")
+mongoose.connect("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
 const loginStudSchema=new mongoose.Schema({
     ID:String,
     Name:String,
     Password:String
 },
 {collection:"student_users"});
-const LogStud=login.model("student_users", loginStudSchema);
+const LogStud=mongoose.model("student_users", loginStudSchema);
 const loginTeachSchema=new mongoose.Schema({
     ID:String,
     Name:String,
     Password:String
 },
 {collection:"teacher_users"});
-const LogTeach=login.model("teacher_users", loginTeachSchema);
+const LogTeach=mongoose.model("teacher_users", loginTeachSchema);
+var modelclass={
+    Class_ID:String,
+    Name:String,
+    Teacher:String,
+    Subject:String,
+    JL:String,
+    Students:String,  
+    NS:String
+};
+const nclass=mongoose.model("class_data", modelclass);
 app.get("/", (req,res)=>{
     res.render("login");
 });
 app.get("/login",(req,res)=>{
     res.render("login");
-})
+});
+app.get("/home_student",(req,res)=>{
+    res.render("home_student");
+});
 app.post("/login", async(req,res)=>{
      //console.log(document.getElementById("invind"));
     try {if(req.body.invind==="Teacher")
@@ -76,7 +89,32 @@ app.post("/login", async(req,res)=>{
     } catch (error) {
         
     }
-})
+});
+app.post("/home_teacher", function(req,res){
+    try {var j=gen.generateRandomWord();
+       let newnote=new nclass({
+       
+    Class_ID:gen.generateRandomNumber(),   
+    Name:req.body.name,
+    Teacher:req.body.teacher,
+    Subject:req.body.subject,
+    JL:j,
+    Students:"",  
+    NS:"0" 
+       }) ;  
+       console.log("here");
+       newnote.save();
+       var data={
+        name:req.body.name,
+        subject:req.body.subject,
+        JL:j
+       };
+       res.render("class_view_teach",{data:data});
+       //res.render("home_teacher");
+    } catch (error) {
+        console.log(error);
+    }
+});
 /*const otp=mongoose.createConnection("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
 const notesSchema=new mongoose.Schema({
     date:String,

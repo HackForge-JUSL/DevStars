@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teacher Dashboard - Google Classroom</title>
+  <title>Teacher Dashboard - Google Classroom-like</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,22 +28,6 @@
     .header h1 {
       color: #333;
       font-size: 24px;
-    }
-
-    .create-class-btn {
-      display: inline-block;
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .create-class-btn:hover {
-      background-color: #0056b3;
     }
 
     .class-cards {
@@ -76,16 +60,73 @@
       color: #666;
     }
 
-    /* Sample Colors - Feel Free to Customize */
-    .class1 { background-color: #ffc107; }
-    .class2 { background-color: #28a745; }
-    .class3 { background-color: #007bff; }
-    /* Add more classes with different colors as needed */
-
-    .create-class-btn-container {
+    /* Create Class Button */
+    .create-class-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .create-class-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Class Creation Popup Form */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .class-form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-btn {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-btn:hover {
+      background-color: #0056b3;
     }
 
   </style>
@@ -93,30 +134,50 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Welcome, {{data.name}}</h1>
-      <a href="#" class="create-class-btn">Create New Class</a>
+      <h1>My Classes</h1>
     </div>
 
     <div class="class-cards">
-      <div class="class-card class1">
+      <div class="class-card">
         <h2>Mathematics</h2>
-        <p>Join Mr. Smith's Math Class</p>
+        <p>Teach Geometry and Algebra</p>
       </div>
 
-      <div class="class-card class2">
+      <div class="class-card">
         <h2>Science</h2>
-        <p>Explore the World of Science with Mrs. Johnson</p>
+        <p>Explore Biology and Chemistry</p>
       </div>
 
-      <div class="class-card class3">
+      <div class="class-card">
         <h2>History</h2>
-        <p>Journey Through the Past with Dr. Brown</p>
+        <p>Journey Through Ancient Civilizations</p>
       </div>
-
+     
       <!-- Add more class cards as needed -->
+    </div>
+
+    <!-- Create Class Button -->
+    <button class="create-class-btn" onclick="toggleForm()">+</button>
+
+    <!-- Class Creation Form Popup -->
+    <div class="overlay" id="overlay">
+      <div class="class-form">
+        <h2>Create New Class</h2>
+          <form action="/home_teacher" method="post">
+          <input type="text" class="form-input" name="name" placeholder="Class Name" required>
+          <input type="text" class="form-input" name="subject" placeholder="Subject" required>
+          <input type="text" class="form-input" name="teacher" placeholder="Teacher" required>
+          <button type="submit" class="form-btn">Create Class</button>
+        </form>
+      </div>
     </div>
   </div>
 
-
+  <script>
+    function toggleForm() {
+      var overlay = document.getElementById('overlay');
+      overlay.style.display = (overlay.style.display == 'flex') ? 'none' : 'flex';
+    }
+  </script>
 </body>
 </html>

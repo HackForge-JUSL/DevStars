@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard - Google Classroom</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 24px;
+    }
+
+    .create-class-btn {
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .create-class-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .class-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .class-card {
+      flex: 0 1 calc(33.3333% - 20px);
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .class-card h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .class-card p {
+      color: #666;
+    }
+
+    /* Sample Colors - Feel Free to Customize */
+    .class1 { background-color: #ffc107; }
+    .class2 { background-color: #28a745; }
+    .class3 { background-color: #007bff; }
+    /* Add more classes with different colors as needed */
+
+    .create-class-btn-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome, {{data.name}}</h1>
+      <a href="#" class="create-class-btn">Create New Class</a>
+    </div>
+
+    <div class="class-cards">
+      <div class="class-card class1">
+        <h2>Mathematics</h2>
+        <p>Join Mr. Smith's Math Class</p>
+      </div>
+
+      <div class="class-card class2">
+        <h2>Science</h2>
+        <p>Explore the World of Science with Mrs. Johnson</p>
+      </div>
+
+      <div class="class-card class3">
+        <h2>History</h2>
+        <p>Journey Through the Past with Dr. Brown</p>
+      </div>
+
+      <!-- Add more class cards as needed -->
+    </div>
+  </div>
+
+
+</body>
+</html>

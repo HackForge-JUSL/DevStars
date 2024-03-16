@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cuprum:ital,wght@0,400..700;1,400..700&
+family=Open+Sans:ital,wght@0,500;1,800&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@
+0,100..700;1,100..700&family=Roboto+Slab:wght@900&family=Roboto:ital,wght@0,300;0,700;1,900&
+family=Signika+Negative&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <div class="toggle">
+      <label class="switch">
+        <input type="checkbox" id="toggleType" onchange="toggleLogin()">
+        <span class="slider round"></span>
+      </label>
+      <span id="loginType">Student</span>
+    </div>
+    <div id="loginForm">
+    <form  action="/login" method="post">
+    
+      <div class="form-group">
+        <label for="Id">ID</label>
+        <input id="invind" name="invind" value="Student"></input>
+        <input type="text" id="id" name="username" placeholder="Enter your Student ID" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+      </div>
+      <button >Login</button>
+    </form>
+  </div>
+ </div>
+  <script src="script.js"></script>
+</body>
+</html>

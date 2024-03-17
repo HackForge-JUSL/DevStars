@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #abd5ff;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"], textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    button {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .resume-section {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    .resume-label {
+        font-weight: bold;
+    }
+
+    .resume-data {
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Resume Builder</h1>
+    <form id="resume-form">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="text" id="email" placeholder="Your Email" required>
+        <textarea id="achievements" placeholder="Enter your achievements (separated by commas)" required></textarea>
+        <button type="submit">Generate Resume</button>
+    </form>
+    <div id="resume-container" class="hidden">
+        <h2>Resume</h2>
+        <div id="resume-content"></div>
+        <button id="downloadBtn">Download PDF</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById("resume-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var achievements = document.getElementById("achievements").value.split(",").map(item => item.trim());
+
+        if (!name || !email || !achievements) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        var resumeContent = "<div class='resume-section'><span class='resume-label'>Name:</span> <span class='resume-data'>" + name + "</span></div>";
+        resumeContent += "<div class='resume-section'><span class='resume-label'>Email:</span> <span class='resume-data'>" + email + "</span></div>";
+        resumeContent += "<div class='resume-section'><span class='resume-label'>Achievements:</span> <ul class='resume-data'>";
+        achievements.forEach(function(achievement) {
+            resumeContent += "<li>" + achievement + "</li>";
+        });
+        resumeContent += "</ul></div>";
+
+        document.getElementById("resume-content").innerHTML = resumeContent;
+        document.getElementById("resume-container").classList.remove("hidden");
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", function() {
+        var resumeContainer = document.getElementById("resume-container");
+        html2pdf(resumeContainer, {
+            margin:       0.5,
+            filename:     'resume.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</body>
+</html>

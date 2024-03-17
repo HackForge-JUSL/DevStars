@@ -11,6 +11,7 @@ const port=process.env.PORT || 3000;
 const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const { MongoClient } = require("mongodb");
+const {ObjectId}=require("mongodb");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -20,13 +21,14 @@ app.set("view engine", "hbs");
 app.use(flush());
 const gen=require("./random")
 mongoose.connect("mongodb+srv://testUser:12345@cluster0.3oc0kuh.mongodb.net/Intelliclass");
+
 const loginStudSchema=new mongoose.Schema({
     ID_stud:String,
     Name:String,
     Password:String,
     classes:[
-        {
-            class_id:String,
+        {   _id:false,
+            classid:String,
             Attper:String,
             Noclass:String,
             Registry:String
@@ -139,15 +141,24 @@ app.post("/home_student/:student", async(req,res)=>{
         //console.log(req.params.student);
         const stu=await LogStud.findOne({ID_stud:st_id});
         console.log(stu.ID_stud);
-        loginStudSchema.pre("save",async function(next){
-            const ObjectID=mongoose.Types.ObjectId;
-            const classes=this.classes.map(id=>(typeof id==="string")? new ObjectID(id):id);
-            this.classes=classes;
-            next();
-        })
-        stu.classes.push(join_id); 
+        var classesadd=
+            { classid:join_id,
+                Attper:"0",
+                Noclass:"0",
+                Registry: "No"
+
+            }
+            const class_check=await nclass.findOne({JL:join_id});
+            var ns=Number(class_check.NS);
+            ns=ns+1;
+        await nclass.findOneAndUpdate({JL:join_id},{
+            NS:ns
+           
+        }) ;
+        //var id=new mongoose.Types.ObjectId(3245);
+        stu.classes.push(classesadd); 
         await stu.save();
-    } catch (error) { 
+    } catch (error) {  
         console.log(error);
     } 
 });
